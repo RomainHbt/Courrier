@@ -1,44 +1,74 @@
 package letter;
 
 import city.Inhabitant;
-import content.Content;
-
+import content.ContentAmount;
+import exception.NoSuchMoneyException;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * PromissoryNote is a Letter with Money content
+ * 
+ * @author Meyer Hembert
+ *
  */
 
-public class PromissoryNote extends Letter
+public class PromissoryNote extends Letter<ContentAmount>
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * the price static for the letter
 	 */
-	
-	protected float amount;
-	
-
+	protected static final int COST = 1;
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * the factor add with the amount in the letter 
 	 */
+	protected static final int FACTOR = 1;
+	/**
+	 * the amount in the letter
+	 */
+	protected int amount;
+
 	
-	public PromissoryNote(Inhabitant sender, Inhabitant receiver, Content content) {
-		super();
-		// TODO construct me	
+	/**
+	 * Constructor PromissoryNote
+	 * @param sender the sender of the letter
+	 * @param receiver the receiver of the letter
+	 * @param content the content of the letter
+	 */
+	public PromissoryNote(Inhabitant sender, Inhabitant receiver, ContentAmount content) {
+		super(sender, receiver, COST + (FACTOR * content.getAmount())/100, content);
+		amount =content.getAmount();	
 	}
 
 
+	/* 
+	 * @see letter.Letter#lastAction()
+	 */
 	@Override
-	public void action() {
-		// TODO Auto-generated method stub
-		
+	protected void lastAction() {
+		if (this.amount > 0 && this.sender.getBankAccount().getBalance() >= this.amount) {
+			try {
+				this.sender.withdraw(this.amount);
+			} catch (NoSuchMoneyException e) { }
+			this.receiver.credit(amount);
+			(new ThankYouLetter(this.receiver, this.sender, this.getOnlyDescriptionLetter())).action();
+		}
+	}
+
+
+	/* 
+	 * @see letter.Letter#getDescriptionType()
+	 */
+	@Override
+	protected String getDescriptionType() {
+		return "promissory note letter";
+	}
+
+
+	/* 
+	 * @see letter.Letter#possibleToSend()
+	 */
+	@Override
+	protected boolean possibleToSend() {
+		return (this.sender.getBankAccount().getBalance() >= this.price + this.amount);
 	}
 	
 }

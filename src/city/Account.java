@@ -28,7 +28,7 @@ public class Account
 	 * Take money from the account
 	 * @param amount Amount to take
 	 */
-	public void debit(float amount) throws NoSuchMoneyException {
+	public void debit(int amount) throws NoSuchMoneyException {
 		if(this.balance - amount < 0){
 			throw new NoSuchMoneyException();
 		}
@@ -39,12 +39,13 @@ public class Account
 	 * Add money to the account
 	 * @param credit Amount to add
 	 */
-	public void credit(float amount) {
+	public void credit(int amount) {
 		this.balance += amount;	
 	}
 
 	public int getBalance() {
 		return balance;
 	}
+
 }
 

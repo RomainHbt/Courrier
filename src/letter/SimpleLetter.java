@@ -1,39 +1,44 @@
 package letter;
 import city.Inhabitant;
-import content.Content;
-
+import content.ContentString;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * SimpleLetter is a letter with a Text Content
+ * 
+ * @author Meyer Hembert
+ *
  */
 
-public class SimpleLetter extends Letter
+public class SimpleLetter extends Letter<ContentString>
 {
+	/**
+	 * the price static initial for this letter
+	 */
+	protected static final int COST = 1;
+	
+	/**
+	 * Constructor for SimpleLetter
+	 * @param sender the sender of the letter
+	 * @param receiver the receiver of the letter
+	 * @param content the content of the letter
+	 */
+	public SimpleLetter(Inhabitant sender, Inhabitant receiver, ContentString content) {
+		super(sender, receiver, COST, content);
+	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	/* 
+	 * @see letter.Letter#getDescriptionType()
 	 */
-	
-	public SimpleLetter(Inhabitant sender, Inhabitant receiver, Content content) {
-		super(sender, receiver, 1, content);
-		// TODO construct me	
+	@Override
+	protected String getDescriptionType() {
+		return "simple letter";
 	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+
+	/*
+	 * @see letter.Letter#lastAction()
 	 */
-	
-	public void action() {
-		// TODO implement me	
-	}
+	@Override
+	protected void lastAction() {}
 	
 }
 
