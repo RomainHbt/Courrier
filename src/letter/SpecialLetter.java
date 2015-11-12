@@ -23,9 +23,9 @@ public abstract class SpecialLetter<C extends Content> extends Letter<C> {
 	 * @param letter the component of the special letter
 	 */
 	public SpecialLetter(Letter<C> letter) {
-		super(letter.getSender(), letter.getReceiver(), letter.getPrice(), letter.getContent());
+		super(letter.getSender(), letter.getReceiver(), letter.getPrice(), (C)letter);
 		this.letter = letter;
 	}
 
-
+	
 }

@@ -22,7 +22,8 @@ public class RegisteredLetter<C extends Content> extends SpecialLetter<C> {
 	 */
 	public RegisteredLetter(Letter<C> letter) {
 		super(letter);
-		this.price = this.price + additionalCost;
+		this.letter.price = this.price + additionalCost;
+		this.price = this.letter.price;
 	}
 
 	/* 
@@ -32,7 +33,7 @@ public class RegisteredLetter<C extends Content> extends SpecialLetter<C> {
 	protected String getDescriptionType() {
 		return "registered letter whose content is a " + this.letter.getDescriptionType();
 	}
-
+	
 	/* 
 	 * @see letter.Letter#lastAction()
 	 */
