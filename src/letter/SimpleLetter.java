@@ -31,14 +31,15 @@ public class SimpleLetter extends Letter<ContentString>
 	 */
 	@Override
 	protected String getDescriptionType() {
-		return "simple letter";
+		return "a simple letter";
 	}
 
-	/*
-	 * @see letter.Letter#lastAction()
+	/* 
+	 * @see letter.Letter#action()
 	 */
 	@Override
-	protected void lastAction() {}
+	public void action() {}
+
 	
 }
 

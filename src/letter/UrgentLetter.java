@@ -26,13 +26,7 @@ public class UrgentLetter<C extends Content> extends SpecialLetter<C> {
 	 */
 	@Override
 	protected String getDescriptionType() {
-		return "an urgent letter whose content is a" + this.letter.getDescriptionType();
+		return "an urgent letter";
 	}
-
-	/* 
-	 * @see letter.Letter#lastAction()
-	 */
-	@Override
-	protected void lastAction() {}
 
 }

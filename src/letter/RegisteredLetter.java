@@ -1,6 +1,7 @@
 package letter;
 
 import content.Content;
+import exception.NoSuchMoneyException;
 
 /**
  * RegisteredLetter is a Letter which send an acknowledgment of receipt
@@ -31,14 +32,16 @@ public class RegisteredLetter<C extends Content> extends SpecialLetter<C> {
 	 */
 	@Override
 	protected String getDescriptionType() {
-		return "registered letter whose content is a " + this.letter.getDescriptionType();
+		return "a registered letter";
 	}
 	
+	
 	/* 
-	 * @see letter.Letter#lastAction()
+	 * @see letter.Letter#action()
 	 */
 	@Override
-	protected void lastAction() {
+	public void action() {
+		super.action();
 		sendAcknoledmentOfReceipt();
 	}
 	
@@ -46,7 +49,9 @@ public class RegisteredLetter<C extends Content> extends SpecialLetter<C> {
 	 * send an acknowledgment of receipt
 	 */
 	private void sendAcknoledmentOfReceipt() {
-		(new AcknowledgmentOfReceipt(this.receiver, this.sender, this.getOnlyDescriptionLetter())).action();
+		try {
+			this.receiver.sendLetter(new AcknowledgmentOfReceipt(this.receiver, this.sender, this.getDescription()));
+		} catch (NoSuchMoneyException e) {}
 	}
 
 }

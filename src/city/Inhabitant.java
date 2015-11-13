@@ -29,11 +29,12 @@ public class Inhabitant
 	}
 	
 	/**
-	 * Receive a letter from the city
+	 * Receive a letter from the city and do the action
 	 * @param letter Letter to be receive
 	 */
 	public void receiveLetter(Letter<?> letter) {
-		// TODO implement me
+		System.out.println(letter.getReceiveDescription());
+		letter.action();
 	}
 	
 	/**
@@ -42,8 +43,13 @@ public class Inhabitant
 	 * @throws NoSuchMoneyException Exception if the inhabitant hasn't enough money
 	 */
 	public void sendLetter(Letter<?> letter) throws NoSuchMoneyException {
-		this.withdraw(letter.getPrice());
-		this.city.sendLetter(letter);
+		if (letter.possibleToSend()) { 
+			System.out.println(letter.getSendDescription());
+			this.withdraw(letter.getPrice());
+			this.city.sendLetter(letter);
+		} else {
+			throw new NoSuchMoneyException();
+		}
 	}
 	
 	public String getName() {

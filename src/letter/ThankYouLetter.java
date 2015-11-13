@@ -26,6 +26,6 @@ public class ThankYouLetter extends SimpleLetter {
 	 */
 	@Override
 	protected String getDescriptionType() {
-		return "thanks letter which is a simple letter";
+		return "a thanks letter which is a simple letter";
 	}
 }

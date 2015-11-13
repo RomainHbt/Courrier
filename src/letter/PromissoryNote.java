@@ -40,26 +40,11 @@ public class PromissoryNote extends Letter<ContentAmount>
 
 
 	/* 
-	 * @see letter.Letter#lastAction()
-	 */
-	@Override
-	protected void lastAction() {
-		if (this.amount > 0 && this.sender.getBankAccount().getBalance() >= this.amount) {
-			try {
-				this.sender.withdraw(this.amount);
-			} catch (NoSuchMoneyException e) { }
-			this.receiver.credit(amount);
-			(new ThankYouLetter(this.receiver, this.sender, this.getOnlyDescriptionLetter())).action();
-		}
-	}
-
-
-	/* 
 	 * @see letter.Letter#getDescriptionType()
 	 */
 	@Override
 	protected String getDescriptionType() {
-		return "promissory note letter";
+		return "a promissory note letter";
 	}
 
 
@@ -67,8 +52,23 @@ public class PromissoryNote extends Letter<ContentAmount>
 	 * @see letter.Letter#possibleToSend()
 	 */
 	@Override
-	protected boolean possibleToSend() {
+	public boolean possibleToSend() {
 		return (this.sender.getBankAccount().getBalance() >= this.price + this.amount);
+	}
+
+
+	/* 
+	 * @see letter.Letter#action()
+	 */
+	@Override
+	public void action() {
+		try {
+			this.sender.withdraw(this.amount);
+		} catch (NoSuchMoneyException e) {}
+		this.receiver.credit(amount);
+		try {
+			receiver.sendLetter(new ThankYouLetter(receiver, sender, this.getDescription()));
+		} catch (NoSuchMoneyException e) {}
 	}
 	
 }

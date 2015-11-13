@@ -1,7 +1,6 @@
 package letter;
 import city.Inhabitant;
 import content.Content;
-import exception.NoSuchMoneyException;
 
 /**
  * Letter which you can send, receive, send money or text
@@ -45,19 +44,9 @@ public abstract class Letter<C extends Content> implements Content
 	}
 	
 	/**
-	 * action to send the letter and print a description even if the send is impossible
+	 * action when you receive the letter
 	 */
-	public void action() {
-		try {
-			if (possibleToSend()) {
-				System.out.println(this.getDescription());
-				this.sender.sendLetter(this);
-				lastAction();
-			} else {
-				System.out.println("\t# " + this.sender.getName() + "'s account is empty !! Can't send a letter !");
-			}
-		} catch (NoSuchMoneyException e) {}
-	}
+	public abstract void action();
 	
 	/**
 	 * give a description about the letter
@@ -68,33 +57,39 @@ public abstract class Letter<C extends Content> implements Content
 	 * It's true if it's possible to send else false
 	 * @return true if it's possible to send else false
 	 */
-	protected boolean possibleToSend() {
+	public boolean possibleToSend() {
 		return (this.sender.getBankAccount().getBalance() >= this.price);
 	}
-	/**
-	 * complete the action
-	 */
-	protected abstract void lastAction();
 
-	/* 
-	 * @see content.Content#getDescription()
+	
+	/**
+	 * give a description for the sender
+	 * @return a description for the sender
 	 */
-	public String getDescription() {
+	public String getSendDescription() {
 		String euro = "euro";
 		if (this.price > 1) {
 			euro = "euros";
 		}
-		String description = " ->" + this.sender.getName() + " mails " + getOnlyDescriptionLetter();
+		String description = " -> " + this.sender.getName() + " mails " + getDescription();
 		description += " to " + this.receiver.getName()  + " for a cost of " + this.price + " " + euro;
 		return description;
 	}
 	
 	/**
-	 * @return only the description about the letter
+	 * give a description for the receiver
+	 * @return a description for the receiver
 	 */
-	protected String getOnlyDescriptionLetter() {
-		String description = "a " + this.getDescriptionType();
-		description += " whose content is a " + this.content.getDescription() ;
+	public String getReceiveDescription() {
+		return (" <- " + this.receiver.getName() + " receives " + getDescription() + " from " + this.sender.getName());
+	}
+	
+	/* 
+	 * @see content.Content#getDescription()
+	 */
+	public String getDescription() {
+		String description = this.getDescriptionType();
+		description += " whose content is " + this.content.getDescription() ;
 		return description;
 	}
 
