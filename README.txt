@@ -50,7 +50,9 @@ La partie du code qui gère la simulation de l'envoie du courrier est dans le ma
 				Inhabitant sender = c.getRandomInhabitant();
 				try {
 					sender.sendLetter(Letter.makeLetter(sender));
-				} catch (NoSuchMoneyException e) {}
+				} catch (NoSuchMoneyException e) {
+					System.out.println(sender.getName()+" can't send a letter : he hasn't enough money :(");
+				}
 			}
 		}
 		[...]

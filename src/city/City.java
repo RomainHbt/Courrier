@@ -127,7 +127,9 @@ public class City
 				Inhabitant sender = c.getRandomInhabitant();
 				try {
 					sender.sendLetter(Letter.makeLetter(sender));
-				} catch (NoSuchMoneyException e) {}
+				} catch (NoSuchMoneyException e) {
+					System.out.println(sender.getName()+" can't send a letter : he hasn't enough money :(");
+				}
 			}
 		}
 		
