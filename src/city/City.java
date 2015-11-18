@@ -52,7 +52,11 @@ public class City
 		
 		// The postman sends letters
 		for (Letter<?> l : postmanBag) {
-			l.getReceiver().receiveLetter(l);
+			if (this.inhabitants.contains(l.getReceiver())) {
+				l.getReceiver().receiveLetter(l);	
+			} else {
+				System.out.println("The letter isn't for this city\n");
+			}
 		}
 	}
 	
@@ -73,8 +77,18 @@ public class City
 		return this.inhabitants.get(City.random.nextInt(this.inhabitants.size()));	
 	}
 	
+	/**
+	 * @return the name of the City
+	 */
 	public String getNom(){
 		return nom;
+	}
+	
+	/**
+	 * @return the list of inhabitants of the city
+	 */
+	public List<Inhabitant> getListInhabitant() {
+		return this.inhabitants;
 	}
 	
 	/**

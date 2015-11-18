@@ -90,6 +90,16 @@ public class TestPromissoryNote extends TestLetter{
 	}
 	
 	@Test
+	public void testActionCantSendAThanksLetter() throws NoSuchMoneyException {
+		InhabitantsToTest sender = new InhabitantsToTest("Sender", new City("myCity"), 1);
+		InhabitantsToTest receiver = new InhabitantsToTest("receiver", new City("myCity"), 0);
+		sender.sendLetter(createLetter(sender, receiver));
+		assertEquals(0, sender.getBankAccount().getBalance());
+		receiver.receiveLetter(createLetter(sender, receiver));
+		assertEquals(0, receiver.numberOfLetterSent);
+	}
+	
+	@Test
 	public void testWithInterest() throws NoSuchMoneyException {
 		robert.sendLetter(letter3);
 		assertEquals(495, robert.getBankAccount().getBalance());

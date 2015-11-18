@@ -52,14 +52,23 @@ public class Inhabitant
 		}
 	}
 	
+	/**
+	 * @return the name of the inhabitant
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @return the city of the inhabitant
+	 */
 	public City getCity() {
 		return city;
 	}
 	
+	/**
+	 * @return the bank account of the inhabitant
+	 */
 	public Account getBankAccount(){
 		return bankAccount;
 	}

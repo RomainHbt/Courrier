@@ -64,9 +64,7 @@ public class PromissoryNote extends Letter<ContentAmount>
 	public void action() {
 		try {
 			this.sender.withdraw(this.amount);
-		} catch (NoSuchMoneyException e) {
-			System.out.println(""+sender.getName()+" can't give money : he is uncovered !");
-		}
+		} catch (NoSuchMoneyException e) {}
 		this.receiver.credit(amount);
 		try {
 			receiver.sendLetter(new ThankYouLetter(receiver, sender, this.getDescription()));

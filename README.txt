@@ -67,7 +67,7 @@ La méthode sendLetter(Letter<?> letter) se trouvant dans la classe Inhabitant. 
 				this.withdraw(letter.getPrice());
 				this.city.sendLetter(letter);
 			} else {
-				// exception lancée lorqu'il 
+				// exception lancée lorqu'il m'y a pas assez d'argent
 				throw new NoSuchMoneyException();
 			}
 		}

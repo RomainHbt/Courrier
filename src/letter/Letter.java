@@ -153,17 +153,23 @@ public abstract class Letter<C extends Content> implements Content
 				return null;
 		}
 		
-		switch (r.nextInt(4)) {
+		switch (r.nextInt(3)) {
 			case 0:
 				// Nothing
 				return l;
 			case 1:
 				// RegisteredLetter
 				colis = new RegisteredLetter<>(l);
+				if (r.nextInt(2) == 0) {
+					colis = new UrgentLetter<>(colis);
+				}
 				break;
 			case 2:
 				// UrgentLetter
 				colis = new UrgentLetter<>(l);
+				if (r.nextInt(2) == 0) {
+					colis = new RegisteredLetter<>(colis);
+				}
 				break;
 			default:
 				return null;
