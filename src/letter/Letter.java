@@ -1,6 +1,10 @@
 package letter;
+import java.util.Random;
+
 import city.Inhabitant;
 import content.Content;
+import content.ContentAmount;
+import content.ContentString;
 
 /**
  * Letter which you can send, receive, send money or text
@@ -125,6 +129,46 @@ public abstract class Letter<C extends Content> implements Content
 		return content;
 	}
 	
-	
+	/**
+	 * Generate a random type of letter
+	 * @param sender The letter's sender
+	 * @return a random letter
+	 */
+	public static Letter<?> makeLetter(Inhabitant sender){
+		Random r = new Random();
+		Letter<?> l;
+		Letter<?> colis;
+		Inhabitant receiver = sender.getCity().getRandomInhabitant();
+		
+		switch (r.nextInt(2)) {
+			case 0:
+				// SimpleLetter
+				l = new SimpleLetter(sender, receiver, new ContentString("Coucou"));
+				break;
+			case 1:
+				// PromissoryNote
+				l = new PromissoryNote(sender, receiver, new ContentAmount(r.nextInt(50)+1));
+				break;
+			default:
+				return null;
+		}
+		
+		switch (r.nextInt(4)) {
+			case 0:
+				// Nothing
+				return l;
+			case 1:
+				// RegisteredLetter
+				colis = new RegisteredLetter<>(l);
+				break;
+			case 2:
+				// UrgentLetter
+				colis = new UrgentLetter<>(l);
+				break;
+			default:
+				return null;
+		}
+		return colis;
+	}
 }
 

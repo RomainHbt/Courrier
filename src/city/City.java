@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import exception.NoSuchMoneyException;
+
 import letter.Letter;
 
 
 /**
  * The city which represents a city for the simulation
  * This class contains the main of the application
- * @author hembert & meyer
+ * @author hembert meyer
  */
 
 public class City
@@ -64,6 +66,18 @@ public class City
 	}
 	
 	/**
+	 * Get a random inhabitant of the city
+	 * @return a random inhabitant
+	 */
+	public Inhabitant getRandomInhabitant() {
+		return this.inhabitants.get(City.random.nextInt(this.inhabitants.size()));	
+	}
+	
+	public String getNom(){
+		return nom;
+	}
+	
+	/**
 	 * Add an inhabitant in the city
 	 * @param i The inhabitant to be added
 	 */
@@ -73,28 +87,34 @@ public class City
 
 	/**
 	 * Main program
+	 * @param args Command's arguments
 	 */
 	public static void main(String[] args) {
 		int nbHabitants = 100;
 		int nbJours = 6;
 		int day;
 		
+		if(args.length == 2){
+			nbHabitants = Integer.parseInt(args[0]);
+			nbJours = Integer.parseInt(args[1]);
+		}
+		
 		// Creating city
-		System.out.println("Création de la ville d'Hazebrouck ...");
+		System.out.println("Creating Hazebrouck city ...");
 		City c = new City("Hazebrouck");
 		
 		// Creating inhabitants
-		System.out.println("Création de "+nbHabitants+" habitants ...");
+		System.out.println("Creating "+nbHabitants+" inhabitants ...");
 		for(int i = 1; i <= nbHabitants; i++){
 			Inhabitant h = new Inhabitant("habitant-"+i, c, (int) (random.nextFloat()*500));
 			c.addInhabitant(h);
 		}
 		
-		System.out.println("Distribution du courrier pendant "+nbJours+" jours ...");
+		System.out.println("Mailing letters for "+nbJours+" days ...");
 		
 		// Start of simulation
 		for(day = 1; day <= nbJours; day++){
-			System.out.println("------------------------------------------\nJour "+day);
+			System.out.println("------------------------------------------\nDay "+day);
 			
 			// Distributing letters ...
 			if(!c.postBox.isEmpty()){
@@ -102,12 +122,20 @@ public class City
 			}
 			
 			// Sending letters ...
-			// TODO Generate and send random letters
+			int nbSenders = (City.random.nextInt(10))+1; 
+			for (int i = 0; i < nbSenders; i++) {
+				Inhabitant sender = c.getRandomInhabitant();
+				try {
+					sender.sendLetter(Letter.makeLetter(sender));
+				} catch (NoSuchMoneyException e) {
+					System.out.println(sender.getName()+" can't send a letter : he hasn't enough money :(");
+				}
+			}
 		}
 		
 		// If the postbox is not empty yet
 		while(!c.postBox.isEmpty()){
-			System.out.println("------------------------------------------\nJour "+day);
+			System.out.println("------------------------------------------\nDay "+day);
 			// Distributing letters ...
 			c.distributeLetter();
 			day++;

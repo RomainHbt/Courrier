@@ -6,7 +6,7 @@ import letter.Letter;
 
 /**
  * Class which represents a inhabitant of a city
- * @author hembert & meyer
+ * @author hembert meyer
  */
 
 public class Inhabitant
