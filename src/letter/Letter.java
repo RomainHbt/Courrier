@@ -130,8 +130,9 @@ public abstract class Letter<C extends Content> implements Content
 	}
 	
 	/**
-	 * Make a random type letter
-	 * @return 
+	 * Generate a random type of letter
+	 * @param sender The letter's sender
+	 * @return a random letter
 	 */
 	public static Letter<?> makeLetter(Inhabitant sender){
 		Random r = new Random();

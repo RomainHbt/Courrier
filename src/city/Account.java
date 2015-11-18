@@ -5,7 +5,7 @@ import exception.NoSuchMoneyException;
 
 /**
  * Class which represents a inhabitant's bank account
- * @author hembert & meyer
+ * @author hembert meyer
  */
 
 public class Account
@@ -27,6 +27,7 @@ public class Account
 	/**
 	 * Take money from the account
 	 * @param amount Amount to take
+	 * @throws NoSuchMoneyException when the inhabitant hasn't enough money
 	 */
 	public void debit(int amount) throws NoSuchMoneyException {
 		if(this.balance - amount < 0){
@@ -37,7 +38,7 @@ public class Account
 	
 	/**
 	 * Add money to the account
-	 * @param credit Amount to add
+	 * @param amount Amount to add
 	 */
 	public void credit(int amount) {
 		this.balance += amount;	

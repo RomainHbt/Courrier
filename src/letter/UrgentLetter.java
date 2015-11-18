@@ -14,7 +14,7 @@ public class UrgentLetter<C extends Content> extends SpecialLetter<C> {
 
 	/**
 	 * Constructor Urgent Letter
-	 * @param letter
+	 * @param letter Letter in the Urgent Letter
 	 */
 	public UrgentLetter(Letter<C> letter) {
 		super(letter);

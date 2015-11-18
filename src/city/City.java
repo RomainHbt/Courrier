@@ -12,7 +12,7 @@ import letter.Letter;
 /**
  * The city which represents a city for the simulation
  * This class contains the main of the application
- * @author hembert & meyer
+ * @author hembert meyer
  */
 
 public class City
@@ -87,6 +87,7 @@ public class City
 
 	/**
 	 * Main program
+	 * @param args Command's arguments
 	 */
 	public static void main(String[] args) {
 		int nbHabitants = 100;
